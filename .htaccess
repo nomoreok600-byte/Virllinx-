@@ -1,0 +1,81 @@
+# ==========================================
+# ViralLinx - Clean URLs (no .php shown)
+# Works on cPanel / Apache with mod_rewrite
+# ==========================================
+RewriteEngine On
+RewriteBase /
+
+# Tell the main site to completely ignore the /s/ folder
+RewriteRule ^s/ - [L]
+
+# Force HTTPS (uncomment if SSL is installed)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Redirect direct .php access to clean URL (SEO)
+RewriteCond %{THE_REQUEST} ^[A-Z]+\ /([^\ ?]+)\.php[\ ?]
+RewriteCond %{REQUEST_URI} !^/admin
+RewriteCond %{REQUEST_URI} !^/s
+RewriteRule ^ /%1 [R=301,L]
+
+# Old watch.php?id=X links -> new clean URL
+RewriteCond %{QUERY_STRING} ^id=(\d+)$
+RewriteRule ^watch$ /watch/%1? [R=301,L]
+
+# Sitemap
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# Watch page: /watch/123/some-title-slug
+RewriteRule ^watch/(\d+)/?([a-z0-9-]*)/?$ watch.php?id=$1&slug=$2 [L,QSA]
+
+# Static pages: /page/about-us
+RewriteRule ^page/([a-z0-9-]+)/?$ page.php?slug=$1 [L,QSA]
+
+# Tags: /tags (cloud) and /tag/<name> (single tag, allows spaces/%20 and unicode)
+RewriteRule ^tags/?$ tags.php [L,QSA]
+RewriteRule ^tag/([^/]+)/?$ tag.php?tag=$1 [L,QSA]
+
+# Admin panel: /admin and /admin/xyz
+RewriteRule ^admin/?$ admin/index.php [L,QSA]
+RewriteRule ^admin/([a-z-]+)/?$ admin/$1.php [L,QSA]
+
+# Generic: serve /name via name.php if it exists
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.php -f
+RewriteRule ^([a-z0-9-]+)/?$ $1.php [L,QSA]
+
+# Everything else that doesn't exist -> 404 page
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . 404.php [L]
+
+# Custom error page
+ErrorDocument 404 /404.php
+
+# Protect sensitive files
+<FilesMatch "^(config\.php|schema\.php|functions\.php)$">
+    Require all denied
+</FilesMatch>
+
+# Basic security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Browser caching for static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
+</IfModule>
+
+# Gzip compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
+</IfModule>

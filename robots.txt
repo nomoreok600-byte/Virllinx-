@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /includes/
+Disallow: /login
+Disallow: /register
+Disallow: /profile
+Disallow: /logout
+
+Sitemap: https://virallinx.site/sitemap.xml
