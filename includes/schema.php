@@ -126,6 +126,8 @@ try {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
+    // Uploads settings are stored in settings; uploads dir itself is created at runtime by admin settings
+
     // Seed default admin user
     $admin_exists = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'admin'")->fetchColumn();
     if (!$admin_exists) {

@@ -1,9 +1,14 @@
-// Admin AJAX helpers
+// Admin AJAX helpers (CSRF token comes from window.VL_CSR injected by footer)
+function vlAdminCsrf() {
+    var input = document.querySelector('input[name="csrf"]');
+    return (input && input.value) || window.VL_CSR || '';
+}
+
 function adminPost(body, cb) {
     fetch(window.location.pathname, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body
+        body: body + '&csrf=' + encodeURIComponent(vlAdminCsrf())
     })
     .then(function (r) { return r.json(); })
     .then(cb);

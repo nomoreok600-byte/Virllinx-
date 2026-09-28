@@ -54,15 +54,26 @@ RewriteRule . 404.php [L]
 ErrorDocument 404 /404.php
 
 # Protect sensitive files
-<FilesMatch "^(config\.php|schema\.php|functions\.php)$">
+<FilesMatch "^(config\.php|schema\.php|functions\.php|db\.php)$">
     Require all denied
 </FilesMatch>
+
+# Block direct access to test/dev tooling if it ever leaks to production
+<FilesMatch "^(run_integration|render_page|router)\.php$">
+    Require all denied
+</FilesMatch>
+
+# Disable directory listings everywhere
+Options -Indexes
 
 # Basic security headers
 <IfModule mod_headers.c>
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+    Header always unset X-Powered-By
+    Header unset Server
 </IfModule>
 
 # Browser caching for static assets

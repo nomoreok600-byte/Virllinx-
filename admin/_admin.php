@@ -27,7 +27,7 @@ function admin_header($title, $active) {
 <body>
 <div class="admin-shell">
     <aside class="admin-sidebar">
-        <a href="/admin" class="admin-logo"><?php echo e(setting('site_name', 'ViralLinx')); ?> <span>Admin</span></a>
+        <a href="/admin" class="admin-logo"><?php echo site_logo_html(24); ?> <span style="margin-left:6px;"><?php echo e(setting('site_name', 'ViralLinx')); ?> Admin</span></a>
         <nav>
             <?php foreach ($items as $key => $item): ?>
                 <a href="/admin<?php echo $item[0] === 'index' ? '' : '/' . $item[0]; ?>" class="<?php echo $key === $active ? 'active' : ''; ?>"><?php echo $item[1]; ?></a>

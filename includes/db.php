@@ -12,3 +12,6 @@ try {
 
 require_once __DIR__ . '/schema.php';
 require_once __DIR__ . '/functions.php';
+
+// Apply hardened security headers on every request
+apply_security_headers();

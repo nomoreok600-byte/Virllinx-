@@ -693,6 +693,70 @@ body.sidebar-collapsed .yt-layout { padding-left: 24px; }
 .pill-btn.liked { background: var(--yt-blue); color: #0f0f0f; }
 .pill-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
+/* Joined segmented buttons (like / dislike group) */
+.watch-action-group {
+    display: inline-flex;
+    gap: 0;
+    flex-shrink: 0;
+}
+.watch-action-group .pill-btn {
+    border-radius: 0;
+}
+.watch-action-group .pill-btn:first-child {
+    border-radius: 18px 0 0 18px;
+}
+.watch-action-group .pill-btn:last-child {
+    border-radius: 0 18px 18px 0;
+    border-left: 1px solid var(--yt-border);
+}
+.pill-btn.segment {
+    background: var(--yt-surface-2);
+}
+.pill-btn.segment:hover { background: var(--yt-surface-3); }
+
+/* Owner row (channel avatar + name + actions) */
+.watch-owner-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+}
+.watch-owner-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+}
+.watch-owner-text { display: flex; flex-direction: column; min-width: 0; }
+.watch-owner-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--yt-text);
+    line-height: 1.3;
+}
+.watch-owner-sub {
+    font-size: 12px;
+    color: var(--yt-text-2);
+    line-height: 1.4;
+}
+.watch-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+    .watch-actions { margin-left: 0; width: 100%; }
+}
+
 .description-panel {
     background: var(--yt-surface-2);
     border: none;

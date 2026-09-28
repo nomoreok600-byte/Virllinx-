@@ -48,7 +48,7 @@ $yt_icons = [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/style.css?v=3">
+    <link rel="stylesheet" href="/assets/style.css?v=4">
     <?php if (isset($extra_head)) echo $extra_head; ?>
     <?php echo setting('google_analytics_code'); ?>
     <?php echo setting('header_code'); ?>
@@ -62,10 +62,7 @@ $yt_icons = [
     </button>
 
     <a href="<?php echo url(''); ?>" class="brand-logo">
-        <svg viewBox="0 0 90 64" xmlns="http://www.w3.org/2000/svg">
-            <path d="M88.32 10.14a11.25 11.25 0 0 0-7.91-7.96C73.4.5 45 .5 45 .5s-28.4 0-35.41 1.68a11.25 11.25 0 0 0-7.9 7.96C0 17.17 0 32 0 32s0 14.83 1.69 21.86a11.25 11.25 0 0 0 7.9 7.96C16.6 63.5 45 63.5 45 63.5s28.4 0 35.41-1.68a11.25 11.25 0 0 0 7.91-7.96C90 46.83 90 32 90 32s0-14.83-1.68-21.86z" fill="#ff0033"/>
-            <path d="M36 45.5V18.5L60 32z" fill="#fff"/>
-        </svg>
+        <?php echo site_logo_html(26); ?>
         <span class="brand-text"><?php echo e(setting('site_name', 'ViralLinx')); ?></span>
     </a>
 

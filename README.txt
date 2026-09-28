@@ -3,6 +3,44 @@
  YouTube-style UI • Multi-Category • Tags
 ==========================================
 
+WHAT'S NEW IN THIS RELEASE
+--------------------------
+1. WATCH PAGE FIXED & REBUILT (YouTube-style)
+   - The old vertical reel layout (9:16, phone-style) is gone. Videos now
+     play in a proper 16:9 player on desktop, like YouTube.
+   - Channel/owner row with avatar, site name, views • upload time.
+   - Joined Like/Dislike button group, plus Reel view, Share (native
+     share sheet with copy-link fallback), and WhatsApp buttons.
+   - Tag + category chips, expandable description panel, comments with
+     per-comment likes, and an "Up Next" recommendations sidebar (12
+     videos, same category first).
+   - Safe-embed validation: broken or unsafe embeds show a clean
+     "Stream unavailable" fallback instead of a broken player.
+2. YOUR OWN LOGO (no more YouTube branding)
+   - Site header, admin sidebar, and settings preview now use a custom
+     ViralLinx lightning-bolt mark by default.
+   - Admin > Settings: upload a logo image (PNG/JPG/WEBP/SVG/ICO, 2 MB
+     max) or paste a logo URL, with live preview and one-click remove.
+3. SECURITY HARDENING
+   - CSRF tokens on every form AND AJAX action (likes, admin actions,
+     logo upload), hardened session cookies (HttpOnly/Secure/SameSite,
+     ID rotation, User-Agent binding), rate limits on likes + comments,
+     security headers (CSP, X-Frame-Options, nosniff, Referrer-Policy,
+     Permissions-Policy) in PHP and .htaccess, strict embed validation,
+     and write-protected uploads/branding/.
+
+DELIVERABLE / PACKAGE
+---------------------
+- virallinx-youtube-style.zip — the complete, ready-to-upload site build
+  (all PHP pages, assets, .htaccess; excludes tests and git files).
+- To deploy on cPanel: upload the zip to public_html via File Manager,
+  right-click > Extract, and overwrite the old files. Your existing
+  includes/config.php database credentials are preserved; the schema
+  auto-migrates on the first visit.
+- Verify after upload: open any video page (clean 16:9 watch layout),
+  check Admin > Settings for the Logo / Branding box, and hard-refresh
+  (Ctrl+F5) once so browsers pick up style.css?v=4 and app.js?v=4.
+
 INSTALLATION (cPanel)
 ---------------------
 1. Upload ALL files (including the hidden .htaccess) to public_html.
@@ -41,7 +79,9 @@ Old links like /watch.php?id=5 are 301-redirected to the new URLs.
 FEATURES
 --------
 Public: YouTube-style dark theme (fixed header, collapsible sidebar,
-category chips, YT video cards), user registration/login, per-user likes,
+category chips, YT video cards), fully rebuilt YouTube-style watch page
+(16:9 player, owner row, like/dislike group, share buttons, Up Next
+sidebar), user registration/login, per-user likes,
 comments, watch history, liked videos, profile, multi-category filter
 chips (select several categories at once), tag chips on every video,
 tag pages (/tags + /tag/<name>), tag-aware search, category filters,
@@ -58,7 +98,8 @@ video manager (add/edit/delete, bulk actions, drafts, featured hero video,
 per-video SEO fields, MULTI-SELECT categories, comma-separated TAGS),
 categories, comment moderation (approve/spam/delete), full user
 management (create, ban, promote to admin, reset password, delete),
-static page builder (About/Privacy/DMCA...), CSV export, and a complete
+static page builder (About/Privacy/DMCA...), CSV export, logo upload /
+logo URL with live preview (Settings), and a complete
 Ads Manager:
   - Header code (Google AdSense auto ads / any script into <head>)
   - Footer code
@@ -84,9 +125,24 @@ MULTI-CATEGORY & TAGS (how they work)
 SECURITY
 --------
 Passwords hashed (bcrypt), PDO prepared statements everywhere, CSRF
-tokens on forms, includes/ directory blocked from direct access,
-admin panel noindex, security headers in .htaccess, tag input sanitized
-(strip_tags + character whitelist) and escaped on output.
+tokens on ALL forms AND AJAX actions (likes, admin row actions, logo
+upload), includes/ directory blocked from direct access, admin panel
+noindex, hardened session cookies (HttpOnly / Secure / SameSite=Lax,
+periodic ID rotation, User-Agent binding), per-session rate limits on
+likes and comments, security headers (CSP, X-Frame-Options, nosniff,
+Referrer-Policy, Permissions-Policy) in PHP and .htaccess, tag input
+sanitized (strip_tags + character whitelist) and escaped on output,
+strict embed validation on the watch page (http(s) only, no scripts
+inside iframes), and uploads/branding/ write-protected at runtime.
+
+BRANDING / LOGO (Admin > Settings)
+----------------------------------
+- Upload your own logo image (PNG / JPG / WEBP / SVG / ICO, max 2 MB)
+  or paste a logo image URL. It replaces the default lightning-bolt
+  mark in the site header, admin sidebar, and preview pane.
+- Remove the logo to fall back to the built-in ViralLinx mark.
+- Logo files are validated by real MIME type (not extension) and stored
+  under uploads/branding/ which is protected against script execution.
 
 NOTES
 -----

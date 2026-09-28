@@ -78,7 +78,8 @@ if ($popunder_url):
 <?php endif; ?>
 <?php echo render_ads('popunder', false); ?>
 
-<script src="/assets/app.js?v=3"></script>
+<script>window.VL_CSR = '<?php echo csrf_token(); ?>';</script>
+<script src="/assets/app.js?v=4"></script>
 <script>
 // ---------- YouTube-style sidebar toggle ----------
 function toggleSidebar() {
