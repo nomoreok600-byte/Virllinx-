@@ -36,13 +36,19 @@ document.addEventListener('click', function (e) {
     }
 });
 
+// CSRF token injected by footer (window.VL_CSR)
+function csrfToken() {
+    var input = document.querySelector('input[name="csrf"]');
+    return (input && input.value) || window.VL_CSR || '';
+}
+
 // Like video (watch page)
 function likeVideo(videoId) {
     var btn = document.getElementById('likeBtn');
     fetch(window.location.pathname, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'action=like&id=' + encodeURIComponent(videoId)
+        body: 'action=like&id=' + encodeURIComponent(videoId) + '&csrf=' + encodeURIComponent(csrfToken())
     })
     .then(function (r) { return r.json(); })
     .then(function (data) {
@@ -60,7 +66,7 @@ function likeComment(commentId) {
     fetch(window.location.pathname, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'action=like_comment&comment_id=' + encodeURIComponent(commentId)
+        body: 'action=like_comment&comment_id=' + encodeURIComponent(commentId) + '&csrf=' + encodeURIComponent(csrfToken())
     })
     .then(function (r) { return r.json(); })
     .then(function (data) {

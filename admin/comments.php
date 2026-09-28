@@ -2,6 +2,7 @@
 require_once __DIR__ . '/_admin.php';
 
 if (isset($_POST['ajax_action'])) {
+    if (!csrf_check()) { header('Content-Type: application/json'); echo json_encode(['success' => false, 'message' => 'Invalid token']); exit; }
     header('Content-Type: application/json');
     $response = ['success' => false];
     $cid = intval($_POST['id'] ?? 0);
