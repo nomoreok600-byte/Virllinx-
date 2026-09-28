@@ -160,44 +160,11 @@ require __DIR__ . '/includes/header.php';
 $embed_html = is_safe_embed($video['embed_code'] ?: ($video['video_url'] ?? '')) ? render_embed_player($video) : '';
 ?>
 
-<!-- Reel-mode styles only activate when .fixed-reel-mode is applied -->
-<style>
-.player-frame-container.fixed-reel-mode {
-    position: fixed !important;
-    top: 0; left: 0;
-    width: 100vw !important;
-    height: 100vh !important;
-    max-width: none !important;
-    aspect-ratio: auto !important;
-    z-index: 999999;
-    border-radius: 0;
-    background: #000;
-}
-.close-reel-btn {
-    display: none;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 9999999;
-    background: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: bold;
-    backdrop-filter: blur(5px);
-    cursor: pointer;
-}
-.player-frame-container.fixed-reel-mode .close-reel-btn { display: block; }
-</style>
-
 <div class="watch-container watch-grid">
     <div class="main-column">
 
         <!-- Player: YouTube-style 16:9, rounded, spans the primary column -->
         <div class="player-frame-container" id="videoContainer">
-            <button class="close-reel-btn" onclick="toggleReelMode()">✕ Close</button>
             <?php if ($embed_html !== ''): ?>
                 <?php echo $embed_html; ?>
             <?php else: ?>
@@ -231,10 +198,6 @@ $embed_html = is_safe_embed($video['embed_code'] ?: ($video['video_url'] ?? ''))
                         <svg viewBox="0 0 24 24"><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
                     </button>
                 </div>
-                <button class="pill-btn" onclick="toggleReelMode()">
-                    <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-                    Reel
-                </button>
                 <button class="pill-btn" onclick="shareVideo('<?php echo e($current_url); ?>', '<?php echo e(addslashes($video['title'])); ?>')">
                     <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                     Share
@@ -320,17 +283,6 @@ $embed_html = is_safe_embed($video['embed_code'] ?: ($video['video_url'] ?? ''))
 </div>
 
 <script>
-function toggleReelMode() {
-    const container = document.getElementById('videoContainer');
-    container.classList.toggle('fixed-reel-mode');
-    try {
-        if (container.classList.contains('fixed-reel-mode')) {
-            screen.orientation.lock('portrait').catch(function() {});
-        } else {
-            screen.orientation.unlock();
-        }
-    } catch(e) {}
-}
 function shareVideo(url, title) {
     if (navigator.share) {
         navigator.share({ title: title, url: url }).catch(function() {});
