@@ -9,8 +9,8 @@ WHAT'S NEW IN THIS RELEASE
    - The old vertical reel layout (9:16, phone-style) is gone. Videos now
      play in a proper 16:9 player on desktop, like YouTube.
    - Channel/owner row with avatar, site name, views • upload time.
-   - Joined Like/Dislike button group, plus Reel view, Share (native
-     share sheet with copy-link fallback), and WhatsApp buttons.
+   - Joined Like/Dislike button group, Share (native share sheet with
+     copy-link fallback), and WhatsApp buttons.
    - Tag + category chips, expandable description panel, comments with
      per-comment likes, and an "Up Next" recommendations sidebar (12
      videos, same category first).
@@ -28,6 +28,18 @@ WHAT'S NEW IN THIS RELEASE
      security headers (CSP, X-Frame-Options, nosniff, Referrer-Policy,
      Permissions-Policy) in PHP and .htaccess, strict embed validation,
      and write-protected uploads/branding/.
+4. PLAYER & LAYOUT POLISH (latest)
+   - Player now stays perfectly centered: the 16:9 box no longer gets
+     letterboxed by a height clamp, caps at 1280px, and centers in the
+     column on any screen size.
+   - REEL MODE REMOVED — the site is long-form only (no shorts-style
+     vertical playback). The Reel button, full-screen reel overlay, and
+     all related CSS/JS were deleted.
+   - Header user icon (avatar) reduced from 32px to 26px to match the
+     YouTube-style header proportions.
+   - Larger video title, and a subtle divider under the channel/owner
+     row like YouTube.
+   - Stylesheet bumped to v=5 so all visitors get the new styles.
 
 DELIVERABLE / PACKAGE
 ---------------------
@@ -39,7 +51,7 @@ DELIVERABLE / PACKAGE
   auto-migrates on the first visit.
 - Verify after upload: open any video page (clean 16:9 watch layout),
   check Admin > Settings for the Logo / Branding box, and hard-refresh
-  (Ctrl+F5) once so browsers pick up style.css?v=4 and app.js?v=4.
+  (Ctrl+F5) once so browsers pick up style.css?v=5 and app.js?v=4.
 
 INSTALLATION (cPanel)
 ---------------------
